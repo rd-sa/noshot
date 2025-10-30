@@ -4,30 +4,40 @@
   --txt:#f3f6ff;
 }
 
+html, body { height: 100%; }
+
+@supports (-webkit-touch-callout: none) {
+  :root { height: -webkit-fill-available; }
+  body  { height: -webkit-fill-available; }
+}
+
 *{box-sizing:border-box;}
 
 body{
   margin:0;
-  background:radial-gradient(1200px 800px at 70% 30%,#122036 0%,var(--bg1) 55%) fixed;
+  background:radial-gradient(1200px 800px at 70% 30%, #122036 0%, var(--bg1) 55%);
   color:var(--txt);
-  font-family:'Segoe UI',Roboto,sans-serif;
+  font-family:'Segoe UI', Roboto, sans-serif;
   overflow-x:hidden;
 }
 
-/* Background */
 .arena-bg{
   position:fixed;
   inset:0;
   background:var(--arena-url) center/cover no-repeat;
   filter:brightness(.9) contrast(1.1);
   z-index:-3;
+  min-height:100vh;
+  min-height:100svh;
+  min-height:100dvh;
 }
+
 .arena-veil{
   position:fixed;
   inset:0;
   background:
-    linear-gradient(transparent 99%,rgba(255,255,255,.05) 100%),
-    linear-gradient(90deg,transparent 99%,rgba(255,255,255,.05) 100%);
+    linear-gradient(transparent 99%, rgba(255,255,255,.05) 100%),
+    linear-gradient(90deg, transparent 99%, rgba(255,255,255,.05) 100%);
   background-size:60px 60px;
   mix-blend-mode:screen;
   opacity:.3;
@@ -35,7 +45,6 @@ body{
   z-index:-2;
 }
 
-/* Blocks Layer */
 .layer{position:fixed; inset:0; pointer-events:none;}
 
 .shape{
@@ -51,7 +60,6 @@ body{
 .blue-block{--size:600px; --baseX:5vw; --baseY:10vh; --z:20; --glow:52,214,255;}
 .red-block{--size:600px; --baseX:70vw; --baseY:60vh; --z:30; --glow:255,43,109;}
 
-/* Content Wrapper — always stacked vertically */
 .content{
   position:relative;
   z-index:10;
@@ -64,7 +72,6 @@ body{
   max-width:100%;
 }
 
-/* Logo */
 .logo{
   display:block;
   max-width:60%;
@@ -75,19 +82,17 @@ body{
   margin-right:auto;
 }
 
-/* Video */
 iframe{
   display:block;
   width:100%;
   max-width:960px;
-  height:clamp(250px,50vw,540px);
+  height:clamp(250px, 50vw, 540px);
   border:none;
   border-radius:12px;
   margin-left:auto;
   margin-right:auto;
 }
 
-/* Discord Button */
 .discord-btn{
   display:inline-flex;
   align-items:center;
@@ -101,18 +106,30 @@ iframe{
   text-decoration:none;
   transition:.2s;
 }
-.discord-btn:hover{transform:scale(1.05); filter:brightness(1.15);}
-.discord-icon{width:22px; height:22px; filter:invert(1) brightness(2);}
 
-/* Footer */
-footer{text-align:center; padding:8vh 12px 6vh; opacity:.7; font-size:.9rem;}
+.discord-btn:hover{
+  transform:scale(1.05);
+  filter:brightness(1.15);
+}
 
-/* Mobile */
+.discord-icon{
+  width:22px;
+  height:22px;
+  filter:invert(1) brightness(2);
+}
+
+footer{
+  text-align:center;
+  padding:8vh 12px 6vh;
+  opacity:.7;
+  font-size:.9rem;
+}
+
 @media(max-width:768px){
   .shape{--size:260px;}
   .layer img:first-of-type{--baseX:10vw!important; --baseY:18vh!important;}
   .layer img:last-of-type{--baseX:45vw!important; --baseY:60vh!important;}
-  iframe{height:clamp(200px,55vw,380px);}
+  iframe{height:clamp(200px, 55vw, 380px);}
   .content{padding:14vh 4vw;}
   .logo{margin-bottom:24px!important;}
 }
