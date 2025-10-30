@@ -1,3 +1,12 @@
+function setVH(){
+  const h = (window.visualViewport ? window.visualViewport.height : window.innerHeight)
+  document.documentElement.style.setProperty('--vh', (h * 0.01) + 'px')
+}
+setVH()
+window.addEventListener('resize', setVH)
+window.addEventListener('orientationchange', setVH)
+if (window.visualViewport) window.visualViewport.addEventListener('resize', setVH)
+
 const shapes=[...document.querySelectorAll('.shape')]
 const lerp=(a,b,t)=>a+(b-a)*t
 const clamp=(n,min,max)=>Math.min(max,Math.max(min,n))
