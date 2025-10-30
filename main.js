@@ -50,6 +50,7 @@ function frame(t){
     const by=csNum(el,'--baseY','vh')
     const bob=Math.sin(t/1000*(el.__speed||.6)+(el.__seed||0))*6
     const infl=influenceFor(el,eX,eY)
+
     const tpx=-state.tx*(30+(60-z)*.25)*infl
     const tpy=-state.ty*(30+(60-z)*.25)*infl
 
@@ -58,16 +59,12 @@ function frame(t){
 
     const ang=Math.atan2(eY-by,eX-bx)
     const tilt=clamp(infl*8,-10,10)
-    const rX=Math.sin(ang)*tilt
-    const rY=-Math.cos(ang)*tilt
-    const rZ=(state.tx*-4+state.ty*4)*infl
 
-    el.__rx=lerp(el.__rx,rX,.08)
-    el.__ry=lerp(el.__ry,rY,.08)
-    el.__rz=lerp(el.__rz,rZ,.08)
+    el.__rx=lerp(el.__rx,Math.sin(ang)*tilt,.08)
+    el.__ry=lerp(el.__ry,-Math.cos(ang)*tilt,.08)
+    el.__rz=lerp(el.__rz,(state.tx*-4+state.ty*4)*infl,.08)
 
-    const scale=1+infl*.06
-    el.__scale=lerp(el.__scale,scale,.08)
+    el.__scale=lerp(el.__scale,1+infl*.06,.08)
 
     const drift=sy*(.05+(60-z)*.0006)
     const x=bx+el.__px
