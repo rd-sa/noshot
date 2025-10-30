@@ -4,14 +4,7 @@
   --txt:#f3f6ff;
 }
 
-/* Make the page itself stretch to the real screen height on iOS */
-html, body { height: 100%; min-height: 100vh; }
-@supports (height: 100dvh) {
-  html, body { min-height: 100dvh; }
-}
-@supports (height: 100lvh) {
-  html, body { min-height: 100lvh; }
-}
+html, body { height: 100%; }
 
 *{box-sizing:border-box;}
 
@@ -23,41 +16,21 @@ body{
   overflow-x:hidden;
 }
 
-/* Background fills behind iOS overlay bars */
 .arena-bg{
   position:fixed;
-  left:0; right:0; top:0; bottom:0;
+  left:0; top:0;
+  width:100%;
+  height:calc(var(--vh, 1vh) * 100);
   background:var(--arena-url) center/cover no-repeat;
   filter:brightness(.9) contrast(1.1);
   z-index:-3;
-
-  /* Ensure paint area reaches under the system UI */
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  padding-top:    env(safe-area-inset-top, 0px);
-}
-
-/* Prefer “large viewport” to extend behind URL bar when available */
-@supports (height: 100lvh) {
-  .arena-bg{
-    height: 100lvh;
-    bottom: auto; /* avoid over-constraint when height is set */
-  }
-}
-
-/* If dynamic viewport is supported, also guarantee full visible area */
-@supports (height: 100dvh) {
-  .arena-bg{ min-height: 100dvh; }
-}
-
-/* Extra safety for older iOS */
-@supports (-webkit-touch-callout: none) {
-  html, body { height: -webkit-fill-available; }
-  .arena-bg{ min-height: -webkit-fill-available; }
 }
 
 .arena-veil{
   position:fixed;
-  inset:0;
+  left:0; top:0;
+  width:100%;
+  height:calc(var(--vh, 1vh) * 100);
   background:
     linear-gradient(transparent 99%, rgba(255,255,255,.05) 100%),
     linear-gradient(90deg, transparent 99%, rgba(255,255,255,.05) 100%);
@@ -68,7 +41,13 @@ body{
   z-index:-2;
 }
 
-.layer{position:fixed; inset:0; pointer-events:none;}
+.layer{
+  position:fixed;
+  left:0; top:0;
+  width:100%;
+  height:calc(var(--vh, 1vh) * 100);
+  pointer-events:none;
+}
 
 .shape{
   position:absolute;
@@ -109,7 +88,7 @@ iframe{
   display:block;
   width:100%;
   max-width:960px;
-  height:clamp(250px, 50vw, 540px);
+  height:clamp(250px,50vw,540px);
   border:none;
   border-radius:12px;
   margin-left:auto;
@@ -129,16 +108,30 @@ iframe{
   text-decoration:none;
   transition:.2s;
 }
-.discord-btn:hover{ transform:scale(1.05); filter:brightness(1.15); }
-.discord-icon{ width:22px; height:22px; filter:invert(1) brightness(2); }
 
-footer{ text-align:center; padding:8vh 12px 6vh; opacity:.7; font-size:.9rem; }
+.discord-btn:hover{
+  transform:scale(1.05);
+  filter:brightness(1.15);
+}
+
+.discord-icon{
+  width:22px;
+  height:22px;
+  filter:invert(1) brightness(2);
+}
+
+footer{
+  text-align:center;
+  padding:8vh 12px 6vh;
+  opacity:.7;
+  font-size:.9rem;
+}
 
 @media(max-width:768px){
   .shape{--size:260px;}
   .layer img:first-of-type{--baseX:10vw!important; --baseY:18vh!important;}
   .layer img:last-of-type{--baseX:45vw!important; --baseY:60vh!important;}
-  iframe{height:clamp(200px, 55vw, 380px);}
+  iframe{height:clamp(200px,55vw,380px);}
   .content{padding:14vh 4vw;}
   .logo{margin-bottom:24px!important;}
 }
