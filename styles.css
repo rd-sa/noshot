@@ -4,32 +4,55 @@
   --txt:#f3f6ff;
 }
 
-html, body { height: 100%; }
-
-@supports (-webkit-touch-callout: none) {
-  :root { height: -webkit-fill-available; }
-  body  { height: -webkit-fill-available; }
+/* Make the page itself stretch to the real screen height on iOS */
+html, body { height: 100%; min-height: 100vh; }
+@supports (height: 100dvh) {
+  html, body { min-height: 100dvh; }
+}
+@supports (height: 100lvh) {
+  html, body { min-height: 100lvh; }
 }
 
 *{box-sizing:border-box;}
 
 body{
   margin:0;
-  background:radial-gradient(1200px 800px at 70% 30%, #122036 0%, var(--bg1) 55%);
+  background:radial-gradient(1200px 800px at 70% 30%,#122036 0%,var(--bg1) 55%);
   color:var(--txt);
   font-family:'Segoe UI', Roboto, sans-serif;
   overflow-x:hidden;
 }
 
+/* Background fills behind iOS overlay bars */
 .arena-bg{
   position:fixed;
-  inset:0;
+  left:0; right:0; top:0; bottom:0;
   background:var(--arena-url) center/cover no-repeat;
   filter:brightness(.9) contrast(1.1);
   z-index:-3;
-  min-height:100vh;
-  min-height:100svh;
-  min-height:100dvh;
+
+  /* Ensure paint area reaches under the system UI */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-top:    env(safe-area-inset-top, 0px);
+}
+
+/* Prefer “large viewport” to extend behind URL bar when available */
+@supports (height: 100lvh) {
+  .arena-bg{
+    height: 100lvh;
+    bottom: auto; /* avoid over-constraint when height is set */
+  }
+}
+
+/* If dynamic viewport is supported, also guarantee full visible area */
+@supports (height: 100dvh) {
+  .arena-bg{ min-height: 100dvh; }
+}
+
+/* Extra safety for older iOS */
+@supports (-webkit-touch-callout: none) {
+  html, body { height: -webkit-fill-available; }
+  .arena-bg{ min-height: -webkit-fill-available; }
 }
 
 .arena-veil{
@@ -106,24 +129,10 @@ iframe{
   text-decoration:none;
   transition:.2s;
 }
+.discord-btn:hover{ transform:scale(1.05); filter:brightness(1.15); }
+.discord-icon{ width:22px; height:22px; filter:invert(1) brightness(2); }
 
-.discord-btn:hover{
-  transform:scale(1.05);
-  filter:brightness(1.15);
-}
-
-.discord-icon{
-  width:22px;
-  height:22px;
-  filter:invert(1) brightness(2);
-}
-
-footer{
-  text-align:center;
-  padding:8vh 12px 6vh;
-  opacity:.7;
-  font-size:.9rem;
-}
+footer{ text-align:center; padding:8vh 12px 6vh; opacity:.7; font-size:.9rem; }
 
 @media(max-width:768px){
   .shape{--size:260px;}
