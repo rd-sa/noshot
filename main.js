@@ -1,4 +1,3 @@
-// Robust iOS visual viewport height + live updates (URL bar anim, rotates, etc.)
 function setVH(){
   const vv = window.visualViewport;
   const h  = (vv && vv.height) ? vv.height : window.innerHeight;
