@@ -4,49 +4,50 @@
   --txt:#f3f6ff;
 }
 
-html, body { height: 100%; }
-
-*{box-sizing:border-box;}
+html,body{height:100%}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   background:radial-gradient(1200px 800px at 70% 30%,#122036 0%,var(--bg1) 55%);
   color:var(--txt);
-  font-family:'Segoe UI', Roboto, sans-serif;
-  overflow-x:hidden;
+  font-family:'Segoe UI',Roboto,sans-serif;
+  overflow-x:hidden
 }
 
-.arena-bg{
+.arena-bg-img{
   position:fixed;
-  left:0; top:0;
+  left:0;top:0;
   width:100%;
-  height:calc(var(--vh, 1vh) * 100);
-  background:var(--arena-url) center/cover no-repeat;
-  filter:brightness(.9) contrast(1.1);
+  height:calc(var(--vh,1vh)*100);
+  object-fit:cover;
+  object-position:center;
   z-index:-3;
+  transform:translateZ(0);
+  will-change:transform,width,height
 }
 
 .arena-veil{
   position:fixed;
-  left:0; top:0;
+  left:0;top:0;
   width:100%;
-  height:calc(var(--vh, 1vh) * 100);
+  height:calc(var(--vh,1vh)*100);
   background:
-    linear-gradient(transparent 99%, rgba(255,255,255,.05) 100%),
-    linear-gradient(90deg, transparent 99%, rgba(255,255,255,.05) 100%);
+    linear-gradient(transparent 99%,rgba(255,255,255,.05) 100%),
+    linear-gradient(90deg,transparent 99%,rgba(255,255,255,.05) 100%);
   background-size:60px 60px;
   mix-blend-mode:screen;
   opacity:.3;
   pointer-events:none;
-  z-index:-2;
+  z-index:-2
 }
 
 .layer{
   position:fixed;
-  left:0; top:0;
+  left:0;top:0;
   width:100%;
-  height:calc(var(--vh, 1vh) * 100);
-  pointer-events:none;
+  height:calc(var(--vh,1vh)*100);
+  pointer-events:none
 }
 
 .shape{
@@ -56,11 +57,11 @@ body{
   opacity:.95;
   object-fit:contain;
   will-change:transform;
-  filter:drop-shadow(0 0 20px rgba(0,0,0,.55));
+  filter:drop-shadow(0 0 20px rgba(0,0,0,.55))
 }
 
-.blue-block{--size:600px; --baseX:5vw; --baseY:10vh; --z:20; --glow:52,214,255;}
-.red-block{--size:600px; --baseX:70vw; --baseY:60vh; --z:30; --glow:255,43,109;}
+.blue-block{--size:600px;--baseX:5vw;--baseY:10vh;--z:20;--glow:52,214,255}
+.red-block{--size:600px;--baseX:70vw;--baseY:60vh;--z:30;--glow:255,43,109}
 
 .content{
   position:relative;
@@ -71,7 +72,7 @@ body{
   gap:24px;
   padding:10vh 5vw;
   text-align:center;
-  max-width:100%;
+  max-width:100%
 }
 
 .logo{
@@ -81,7 +82,7 @@ body{
   margin-bottom:32px;
   filter:drop-shadow(0 0 20px rgba(255,255,255,0.4));
   margin-left:auto;
-  margin-right:auto;
+  margin-right:auto
 }
 
 iframe{
@@ -92,7 +93,7 @@ iframe{
   border:none;
   border-radius:12px;
   margin-left:auto;
-  margin-right:auto;
+  margin-right:auto
 }
 
 .discord-btn{
@@ -106,32 +107,23 @@ iframe{
   color:#fff;
   font-weight:700;
   text-decoration:none;
-  transition:.2s;
+  transition:.2s
 }
-
-.discord-btn:hover{
-  transform:scale(1.05);
-  filter:brightness(1.15);
-}
-
-.discord-icon{
-  width:22px;
-  height:22px;
-  filter:invert(1) brightness(2);
-}
+.discord-btn:hover{transform:scale(1.05);filter:brightness(1.15)}
+.discord-icon{width:22px;height:22px;filter:invert(1) brightness(2)}
 
 footer{
   text-align:center;
   padding:8vh 12px 6vh;
   opacity:.7;
-  font-size:.9rem;
+  font-size:.9rem
 }
 
 @media(max-width:768px){
-  .shape{--size:260px;}
-  .layer img:first-of-type{--baseX:10vw!important; --baseY:18vh!important;}
-  .layer img:last-of-type{--baseX:45vw!important; --baseY:60vh!important;}
-  iframe{height:clamp(200px,55vw,380px);}
-  .content{padding:14vh 4vw;}
-  .logo{margin-bottom:24px!important;}
+  .shape{--size:260px}
+  .layer img:first-of-type{--baseX:10vw!important;--baseY:18vh!important}
+  .layer img:last-of-type{--baseX:45vw!important;--baseY:60vh!important}
+  iframe{height:clamp(200px,55vw,380px)}
+  .content{padding:14vh 4vw}
+  .logo{margin-bottom:24px!important}
 }
