@@ -2,6 +2,8 @@
   --arena-url:url('images/background.png');
   --bg1:#0a0b12;
   --txt:#f3f6ff;
+  /* Amount of background overscan (bleed) beyond the visible viewport */
+  --overscan: 12vh;
 }
 
 html,body{height:100%}
@@ -15,11 +17,14 @@ body{
   overflow-x:hidden
 }
 
+/* Background image switched to <img> and given an overscan bleed */
 .arena-bg-img{
   position:fixed;
-  left:0;top:0;
+  left:0;
   width:100%;
-  height:calc(var(--vh,1vh)*100);
+  /* Bleed above & below so iOS chrome shifts never expose gaps */
+  top: calc(-1 * var(--overscan));
+  height: calc( (var(--vh, 1vh) * 100) + (2 * var(--overscan)) );
   object-fit:cover;
   object-position:center;
   z-index:-3;
@@ -27,14 +32,16 @@ body{
   will-change:transform,width,height
 }
 
+/* Veil matches the same overscanned height so the grid covers fully */
 .arena-veil{
   position:fixed;
-  left:0;top:0;
+  left:0;
   width:100%;
-  height:calc(var(--vh,1vh)*100);
+  top: calc(-1 * var(--overscan));
+  height: calc( (var(--vh, 1vh) * 100) + (2 * var(--overscan)) );
   background:
-    linear-gradient(transparent 99%,rgba(255,255,255,.05) 100%),
-    linear-gradient(90deg,transparent 99%,rgba(255,255,255,.05) 100%);
+    linear-gradient(transparent 99%, rgba(255,255,255,.05) 100%),
+    linear-gradient(90deg, transparent 99%, rgba(255,255,255,.05) 100%);
   background-size:60px 60px;
   mix-blend-mode:screen;
   opacity:.3;
@@ -42,11 +49,12 @@ body{
   z-index:-2
 }
 
+/* Parallax interaction layer can stay exact height (no need to bleed) */
 .layer{
   position:fixed;
-  left:0;top:0;
+  left:0; top:0;
   width:100%;
-  height:calc(var(--vh,1vh)*100);
+  height:calc(var(--vh, 1vh) * 100);
   pointer-events:none
 }
 
