@@ -1,10 +1,9 @@
-/* ===== iOS viewport height var (robust) ===== */
 function setVH(){
   try{
     const vv = window.visualViewport;
     const h  = (vv && vv.height) ? vv.height : window.innerHeight;
     document.documentElement.style.setProperty('--vh', (h * 0.01) + 'px');
-  }catch(e){ /* noop */ }
+  }catch(e){  }
 }
 setVH();
 window.addEventListener('resize', setVH, {passive:true});
@@ -15,7 +14,6 @@ if (window.visualViewport){
   window.visualViewport.addEventListener('scroll',  setVH, {passive:true});
 }
 
-/* ===== Parallax / Motion ===== */
 const shapes = [...document.querySelectorAll('.shape')];
 const lerp   = (a,b,t)=>a+(b-a)*t;
 const clamp  = (n,min,max)=>Math.min(max,Math.max(min,n));
@@ -36,14 +34,12 @@ document.addEventListener('touchmove', e=>{
   eX = t.clientX; eY = t.clientY;
 }, {passive:true});
 
-/* seed per element */
 shapes.forEach(el=>{
   el.__seed  = Math.random()*1000;
   el.__speed = .3 + Math.random()*.7;
   el.__px=0; el.__py=0; el.__rx=0; el.__ry=0; el.__rz=0; el.__scale=1;
 });
 
-/* helpers */
 function viewportH(){
   return (window.visualViewport && window.visualViewport.height) || window.innerHeight;
 }
@@ -68,7 +64,6 @@ function parallaxScale(){
   return Math.max(0.6, Math.min(1, Math.min(innerWidth, h) / ref));
 }
 
-/* main loop (defensive) */
 function frame(t){
   try{
     state.tx = lerp(state.tx, state.mx, .06);
@@ -84,7 +79,6 @@ function frame(t){
       const bob = Math.sin(t/1000*(el.__speed||.6)+(el.__seed||0))*6;
       const infl= influenceFor(el,eX,eY);
 
-      /* opposite-direction parallax with screen scaling */
       const tpx = -state.tx*(30+(60 - (Number.isFinite(z)?z:0))*.25)*infl*ps;
       const tpy = -state.ty*(30+(60 - (Number.isFinite(z)?z:0))*.25)*infl*ps;
 
@@ -116,13 +110,11 @@ function frame(t){
       el.style.setProperty('--glowPulse', (pulse*6).toFixed(1)+'px');
     }
   }catch(err){
-    /* Don’t let a one-off error kill the loop */
     console.error('[No Shot] frame error:', err);
   }
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
 
-/* footer year (guarded) */
 const yrEl = document.getElementById('yr');
 if (yrEl) yrEl.textContent = new Date().getFullYear();
